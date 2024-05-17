@@ -47,7 +47,7 @@ services:
       - traefik
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.hboi-be.entrypoints websecure"
+      - "traefik.http.routers.hboi-be.entrypoints=websecure"
       - "traefik.http.routers.hboi-be.rule=Host(`api.domeinbeschrijving.hbo-i.nl`)"
       - "traefik.http.routers.hboi-be.tls=true"
       - "traefik.http.routers.hboi-be.tls.certresolver=lets-encrypt"
