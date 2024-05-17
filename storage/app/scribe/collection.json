@@ -1,0 +1,396 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "http:\/\/localhost:8000"
+        }
+    ],
+    "info": {
+        "name": "Laravel",
+        "_postman_id": "4b4edaed-d7dd-4e93-a636-782cf6aabadd",
+        "description": "",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Endpoints",
+            "description": "",
+            "item": [
+                {
+                    "name": "Display the descriptions.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/descriptions",
+                            "query": [
+                                {
+                                    "key": "search",
+                                    "value": "",
+                                    "description": "The search term.",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "grouping",
+                                    "value": "architecture_layers%2Cactivities%2Clevels",
+                                    "description": "A comma seperated order of the grouping. The order must and can only contain the following items: levels, activities, architecture_layers.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "language",
+                                    "value": "1",
+                                    "description": "The id of the selected language. Defaults to Dutch.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "level[0]",
+                                    "value": 1,
+                                    "description": "Id of the level.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "activity[0]",
+                                    "value": 3,
+                                    "description": "Id of the activity.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "architecture_layer[0]",
+                                    "value": 2,
+                                    "description": "Id of the architecture layer.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/descriptions?search=&grouping=architecture_layers%2Cactivities%2Clevels&language=1&level[0]=1&activity[0]=3&architecture_layer[0]=2"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "60"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "50"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "[{\"id\":2,\"value\":\"Organisatieprocessen\",\"items\":[{\"id\":3,\"value\":\"Ontwerpen\",\"items\":[{\"id\":1,\"value\":\"1\",\"items\":[\"Ontwerpen van enkele organisatieprocessen, enkele gegevensstromen van gestructureerde data, de inrichting van een organisatieonderdeel en\\\/of een deel van de informatievoorziening\",\"Opstellen van een eenvoudig datamanagementplan\",\"Opstellen van een eenvoudig implementatieplan\"]}]}]}]",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Display the supported languages.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/languages",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/languages"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "60"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "49"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"data\":[{\"id\":1,\"value\":\"nl\"}]}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "GET api\/filters",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/filters",
+                            "query": [
+                                {
+                                    "key": "language",
+                                    "value": "1",
+                                    "description": "The id of the language.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/filters?language=1"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "60"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "48"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"data\":{\"levels\":[{\"id\":1,\"value\":\"1\"},{\"id\":2,\"value\":\"2\"},{\"id\":3,\"value\":\"3\"},{\"id\":4,\"value\":\"4\"}],\"activities\":[{\"id\":1,\"value\":\"Analyseren\"},{\"id\":2,\"value\":\"Adviseren\"},{\"id\":3,\"value\":\"Ontwerpen\"},{\"id\":4,\"value\":\"Realiseren\"},{\"id\":5,\"value\":\"Manage & Control\"}],\"architecture_layers\":[{\"id\":1,\"value\":\"Gebruikersinteractie\"},{\"id\":2,\"value\":\"Organisatieprocessen\"},{\"id\":3,\"value\":\"Infrastructuur\"},{\"id\":4,\"value\":\"Software\"},{\"id\":5,\"value\":\"Hardware-Interfacing\"}]}}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Show the professional skills descriptions.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/professional-skills",
+                            "query": [
+                                {
+                                    "key": "language",
+                                    "value": "1",
+                                    "description": "The id of the language to use.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/professional-skills?language=1"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "60"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "47"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"data\":[{\"id\":1,\"value\":\"Toekomstgericht organiseren\\u00a0\",\"competencies\":[{\"id\":1,\"value\":\"Organisatorische context\\u00a0\",\"description\":{\"id\":1,\"value\":\"Je brengt verschillende omgevingsfactoren (bijvoorbeeld maatschappelijke ontwikkelingen zoals vraagstukken op het gebied van duurzaamheid en\\\/of inclusie) die de uitwerking van de opdracht kunnen be\\u00efnvloeden in beeld en onderneemt op basis hiervan vervolgstappen\"}},{\"id\":2,\"value\":\"Ethiek\\u00a0\",\"description\":{\"id\":2,\"value\":\"Je weegt maatschappelijke en ethische aspecten (zoals duurzaamheid en inclusie) in de (toegepaste) technologische en professionele context en betrekt deze in het professioneel handelen\"}},{\"id\":3,\"value\":\"Procesmanagement\",\"description\":{\"id\":3,\"value\":\"Je organiseert en realiseert de opdracht (bijvoorbeeld een projectopdracht) op basis van gestelde randvoorwaarden en draagt zorg voor een duurzame inbedding van de oplevering in de organisatie\"}}]},{\"id\":2,\"value\":\"Onderzoekend vermogen\\u00a0\",\"competencies\":[{\"id\":4,\"value\":\"Methodische Probleemaanpak\\u00a0\",\"description\":{\"id\":4,\"value\":\"Je brengt relevante vraagstukken en\\\/of mogelijkheden in beeld, identificeert welke kennis ontbreekt en plant vervolgstappen in het onderzoek op gestructureerde en kritische wijze, waarbij je kiest voor methoden die passen bij het voorliggende vraagstuk\"}},{\"id\":5,\"value\":\"Onderzoek\\u00a0\",\"description\":{\"id\":5,\"value\":\"Je voert onderzoek doorlopend met een open houding op onderbouwde,\\u00a0 pragmatische, gestructureerde en kritische wijze uit\"}},{\"id\":6,\"value\":\"Oplossing\",\"description\":{\"id\":6,\"value\":\"Je past de uit onderzoek verkregen informatie toe binnen de context van het vraagstuk en doet voorstellen op basis van de verkregen informatie. Je blijft hierbij kritisch en open voor alternatieve idee\\u00ebn en werkwijzen\"}}]},{\"id\":3,\"value\":\"Persoonlijk leiderschap\\u00a0\",\"competencies\":[{\"id\":7,\"value\":\"Ondernemend zijn\\u00a0\",\"description\":{\"id\":7,\"value\":\"Je werkt doelgericht en acteert weloverwogen op nieuwe kansen\\\/initiatieven, waarin je samenwerkingspartners betrekt (denk aan teamleden, opdrachtgevers, eindgebruikers, maatschappelijke organisaties en\\\/of andere stakeholders)\"}},{\"id\":8,\"value\":\"Persoonlijke ontwikkeling\\u00a0\",\"description\":{\"id\":8,\"value\":\"Je onderbouwt studie- en loopbaankeuzes en stuurt je eigen leerontwikkeling beargumenteerd bij (bijvoorbeeld middels reflectie en\\\/of feedback)\"}},{\"id\":9,\"value\":\"Persoonlijke profilering\\u00a0\",\"description\":{\"id\":9,\"value\":\"Je evalueert regelmatig persoonlijke ambities en kwaliteiten in relatie tot de gewenste positionering in het werkveld en onderneemt hier op passende wijze actie op\"}}]},{\"id\":4,\"value\":\"Doelgericht interacteren\\u00a0\",\"competencies\":[{\"id\":10,\"value\":\"Partners\\u00a0\",\"description\":{\"id\":10,\"value\":\"Je onderhoudt actief de relatie met relevante samenwerkingspartners (denk aan teamleden, opdrachtgevers, eindgebruikers, maatschappelijke organisaties en\\\/of andere stakeholders)\"}},{\"id\":11,\"value\":\"Communicatie\",\"description\":{\"id\":11,\"value\":\"Je stemt je communicatie weloverwogen en doelgericht af op de doelgroep(en)\"}},{\"id\":12,\"value\":\"Samenwerking\",\"description\":{\"id\":12,\"value\":\"Je werkt bewust, op constructieve wijze en in de geschikte vorm samen, waarbij je verantwoordelijkheid neemt voor jouw deel in de samenwerking (bijvoorbeeld in interdisciplinaire en\\\/of interculturele context) en het eindresultaat\"}}]}]}",
+                            "name": ""
+                        }
+                    ]
+                },
+                {
+                    "name": "Retrieve the JSON for the professional duties and professional skills.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/export",
+                            "query": [
+                                {
+                                    "key": "search",
+                                    "value": "",
+                                    "description": "The search term.",
+                                    "disabled": true
+                                },
+                                {
+                                    "key": "grouping",
+                                    "value": "architecture_layers%2Cactivities%2Clevels",
+                                    "description": "A comma seperated order of the grouping. The order must and can only contain the following items: levels, activities, architecture_layers.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "language",
+                                    "value": "1",
+                                    "description": "The id of the selected language. Defaults to Dutch.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "level[0]",
+                                    "value": 1,
+                                    "description": "Id of the level.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "activity[0]",
+                                    "value": 3,
+                                    "description": "Id of the activity.",
+                                    "disabled": false
+                                },
+                                {
+                                    "key": "architecture_layer[0]",
+                                    "value": 2,
+                                    "description": "Id of the architecture layer.",
+                                    "disabled": false
+                                }
+                            ],
+                            "raw": "{{baseUrl}}\/api\/export?search=&grouping=architecture_layers%2Cactivities%2Clevels&language=1&level[0]=1&activity[0]=3&architecture_layer[0]=2"
+                        },
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": null,
+                        "description": "",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [
+                                {
+                                    "key": "cache-control",
+                                    "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
+                                },
+                                {
+                                    "key": "x-ratelimit-limit",
+                                    "value": "60"
+                                },
+                                {
+                                    "key": "x-ratelimit-remaining",
+                                    "value": "46"
+                                },
+                                {
+                                    "key": "access-control-allow-origin",
+                                    "value": "*"
+                                }
+                            ],
+                            "code": 200,
+                            "body": "{\"data\":{\"professional_skills\":[{\"id\":1,\"value\":\"Toekomstgericht organiseren\\u00a0\",\"competencies\":[{\"id\":1,\"value\":\"Organisatorische context\\u00a0\",\"description\":{\"id\":1,\"value\":\"Je brengt verschillende omgevingsfactoren (bijvoorbeeld maatschappelijke ontwikkelingen zoals vraagstukken op het gebied van duurzaamheid en\\\/of inclusie) die de uitwerking van de opdracht kunnen be\\u00efnvloeden in beeld en onderneemt op basis hiervan vervolgstappen\"}},{\"id\":2,\"value\":\"Ethiek\\u00a0\",\"description\":{\"id\":2,\"value\":\"Je weegt maatschappelijke en ethische aspecten (zoals duurzaamheid en inclusie) in de (toegepaste) technologische en professionele context en betrekt deze in het professioneel handelen\"}},{\"id\":3,\"value\":\"Procesmanagement\",\"description\":{\"id\":3,\"value\":\"Je organiseert en realiseert de opdracht (bijvoorbeeld een projectopdracht) op basis van gestelde randvoorwaarden en draagt zorg voor een duurzame inbedding van de oplevering in de organisatie\"}}]},{\"id\":2,\"value\":\"Onderzoekend vermogen\\u00a0\",\"competencies\":[{\"id\":4,\"value\":\"Methodische Probleemaanpak\\u00a0\",\"description\":{\"id\":4,\"value\":\"Je brengt relevante vraagstukken en\\\/of mogelijkheden in beeld, identificeert welke kennis ontbreekt en plant vervolgstappen in het onderzoek op gestructureerde en kritische wijze, waarbij je kiest voor methoden die passen bij het voorliggende vraagstuk\"}},{\"id\":5,\"value\":\"Onderzoek\\u00a0\",\"description\":{\"id\":5,\"value\":\"Je voert onderzoek doorlopend met een open houding op onderbouwde,\\u00a0 pragmatische, gestructureerde en kritische wijze uit\"}},{\"id\":6,\"value\":\"Oplossing\",\"description\":{\"id\":6,\"value\":\"Je past de uit onderzoek verkregen informatie toe binnen de context van het vraagstuk en doet voorstellen op basis van de verkregen informatie. Je blijft hierbij kritisch en open voor alternatieve idee\\u00ebn en werkwijzen\"}}]},{\"id\":3,\"value\":\"Persoonlijk leiderschap\\u00a0\",\"competencies\":[{\"id\":7,\"value\":\"Ondernemend zijn\\u00a0\",\"description\":{\"id\":7,\"value\":\"Je werkt doelgericht en acteert weloverwogen op nieuwe kansen\\\/initiatieven, waarin je samenwerkingspartners betrekt (denk aan teamleden, opdrachtgevers, eindgebruikers, maatschappelijke organisaties en\\\/of andere stakeholders)\"}},{\"id\":8,\"value\":\"Persoonlijke ontwikkeling\\u00a0\",\"description\":{\"id\":8,\"value\":\"Je onderbouwt studie- en loopbaankeuzes en stuurt je eigen leerontwikkeling beargumenteerd bij (bijvoorbeeld middels reflectie en\\\/of feedback)\"}},{\"id\":9,\"value\":\"Persoonlijke profilering\\u00a0\",\"description\":{\"id\":9,\"value\":\"Je evalueert regelmatig persoonlijke ambities en kwaliteiten in relatie tot de gewenste positionering in het werkveld en onderneemt hier op passende wijze actie op\"}}]},{\"id\":4,\"value\":\"Doelgericht interacteren\\u00a0\",\"competencies\":[{\"id\":10,\"value\":\"Partners\\u00a0\",\"description\":{\"id\":10,\"value\":\"Je onderhoudt actief de relatie met relevante samenwerkingspartners (denk aan teamleden, opdrachtgevers, eindgebruikers, maatschappelijke organisaties en\\\/of andere stakeholders)\"}},{\"id\":11,\"value\":\"Communicatie\",\"description\":{\"id\":11,\"value\":\"Je stemt je communicatie weloverwogen en doelgericht af op de doelgroep(en)\"}},{\"id\":12,\"value\":\"Samenwerking\",\"description\":{\"id\":12,\"value\":\"Je werkt bewust, op constructieve wijze en in de geschikte vorm samen, waarbij je verantwoordelijkheid neemt voor jouw deel in de samenwerking (bijvoorbeeld in interdisciplinaire en\\\/of interculturele context) en het eindresultaat\"}}]}],\"professional_duties\":[{\"id\":2,\"value\":\"Organisatieprocessen\",\"items\":[{\"id\":3,\"value\":\"Ontwerpen\",\"items\":[{\"id\":1,\"value\":\"1\",\"items\":[\"Ontwerpen van enkele organisatieprocessen, enkele gegevensstromen van gestructureerde data, de inrichting van een organisatieonderdeel en\\\/of een deel van de informatievoorziening\",\"Opstellen van een eenvoudig datamanagementplan\",\"Opstellen van een eenvoudig implementatieplan\"]}]}]}]}}",
+                            "name": ""
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "noauth"
+    }
+}

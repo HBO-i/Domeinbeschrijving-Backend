@@ -1,0 +1,68 @@
+version: "3.9"
+services:
+  mysql:
+    image: mysql:8
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: mysql_database
+      MYSQL_ROOT_PASSWORD: $MYSQL_PASSWORD
+    networks:
+      - internal
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
+      start_period: 5s
+      interval: 5s
+      timeout: 5s
+      retries: 55
+  api:
+    build:
+      context: ../
+      dockerfile: ./deployment/Dockerfile-Web
+    user: "1000:1000"
+    restart: unless-stopped
+    environment:
+      DB_HOST: mysql
+      DB_DATABASE: mysql_database
+      DB_USERNAME: root
+      DB_PASSWORD: $MYSQL_PASSWORD
+      DB_CONNECTION: mysql
+      LOG_CHANNEL: stderr
+      APP_NAME: $APP_NAME
+      APP_URL: https://api.domeinbeschrijving.hbo-i.nl
+      ASSET_URL: https://api.domeinbeschrijving.hbo-i.nl
+
+    networks:
+      - internal
+    volumes:
+      - storage_link:/var/www/html/storage/app/public
+
+  web:
+    build:
+      context: ../
+      dockerfile: ./deployment/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - api
+    networks:
+      - internal
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.hboi-be.entrypoints websecure"
+      - "traefik.http.routers.hboi-be.rule=Host(`api.domeinbeschrijving.hbo-i.nl`)"
+      - "traefik.http.routers.hboi-be.tls=true"
+      - "traefik.http.routers.hboi-be.tls.certresolver=lets-encrypt"
+      - "traefik.docker.network=traefik"
+    volumes:
+      - storage_link:/var/www/html/public/storage
+
+networks:
+  internal:
+    driver: bridge
+  traefik:
+    external: true
+
+volumes:
+  storage_link:
+    driver: local
+
