@@ -27,7 +27,7 @@ services:
       DB_PASSWORD: $MYSQL_PASSWORD
       DB_CONNECTION: mysql
       LOG_CHANNEL: stderr
-      APP_NAME: $APP_NAME
+      APP_NAME: HBO-I
       APP_URL: https://api.domeinbeschrijving.hbo-i.nl
       ASSET_URL: https://api.domeinbeschrijving.hbo-i.nl
 
