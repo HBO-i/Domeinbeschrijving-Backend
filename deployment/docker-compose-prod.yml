@@ -17,7 +17,7 @@ services:
   api:
     build:
       context: ../
-      dockerfile: ./deployment/Dockerfile-Web
+      dockerfile: ./deployment/Dockerfile
     user: "1000:1000"
     restart: unless-stopped
     environment:
@@ -38,7 +38,7 @@ services:
   web:
     build:
       context: ../
-      dockerfile: ./deployment/Dockerfile
+      dockerfile: ./deployment/Dockerfile-Web
     restart: unless-stopped
     depends_on:
       - api
