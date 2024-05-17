@@ -32,7 +32,7 @@ RUN php artisan storage:link
 # Ensure necessary NGINX directories exist
 RUN mkdir -p /var/cache/nginx/client_temp && \
     chown -R www-data:www-data /var/cache/nginx && \
-    chmod -R 755 /var/cache/nginx
+    chmod -R 777 /var/cache/nginx
 
 
 EXPOSE 9000
