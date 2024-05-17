@@ -29,11 +29,6 @@ RUN chmod -R 775 /var/www/html/storage/framework/cache/data
 RUN php artisan key:generate
 RUN php artisan storage:link
 
-# Ensure necessary NGINX directories exist
-RUN mkdir -p /var/cache/nginx/client_temp && \
-    chown -R www-data:www-data /var/cache/nginx && \
-    chmod -R 777 /var/cache/nginx
-
 
 EXPOSE 9000
 
