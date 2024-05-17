@@ -16,5 +16,8 @@ class LanguageSeeder extends Seeder
         Language::create([
             'value' => 'nl'
         ]);
+        Language::create([
+            'value' => 'en'
+        ]);
     }
 }

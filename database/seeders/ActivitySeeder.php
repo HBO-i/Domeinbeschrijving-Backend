@@ -14,16 +14,26 @@ class ActivitySeeder extends Seeder
      */
     public function run(): void
     {
-        $values = ['Analyseren', 'Adviseren', 'Ontwerpen', 'Realiseren', 'Manage & Control'];
-        $language = Language::where('value', 'LIKE', 'nl')->first();
+        $values = [
+            'nl' => ['Analyseren', 'Adviseren', 'Ontwerpen', 'Realiseren', 'Manage & control'],
+            'en' => ['Analysis', 'Advise', 'Design', 'Realise', 'Manage & control'],
+        ];
+        $languages = Language::get();
 
-        foreach($values as $value){
-            $activity = Activity::create();
-            ActivityTranslation::create([
-                'value' => $value, 
-                'activity_id' => $activity->id,
-                'language_id' => $language->id
-            ])->save();
+        for ($i = 0; $i < 5; $i++){
+            Activity::create();
+        }
+
+        foreach($values as $key => $value){
+            $language = $languages->where('value', 'LIKE', $key)->first();
+
+            foreach($value as $translationKey => $translation){
+                ActivityTranslation::create([
+                    'value' => $translation,
+                    'activity_id' => $translationKey + 1,
+                    'language_id' => $language->id,
+                ]);
+            }
         }
     }
 }

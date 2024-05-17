@@ -7,6 +7,15 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProfessionalSkillsDescriptionResource extends JsonResource
 {
+    private $descriptionId;
+    private $descriptionValue;
+
+    public function __construct($descriptionId, $descriptionValue)
+    {
+        $this->descriptionId = $descriptionId;
+        $this->descriptionValue = $descriptionValue;
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -15,8 +24,8 @@ class ProfessionalSkillsDescriptionResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'value' => $this->translations[0]->value
+            'id' => $this->descriptionId,
+            'value' => $this->descriptionValue
         ];
     }
 }

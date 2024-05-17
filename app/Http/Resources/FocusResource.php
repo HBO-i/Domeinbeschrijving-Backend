@@ -14,10 +14,9 @@ class FocusResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-
         return [
-            'id' => $this->id,
-            'value' => $this->translations[0]->value,
+            'id' => $this->focus_id,
+            'value' => $this->focus_value,
             'competencies' => CompetencyResource::collection($this->competencies)
         ];
     }

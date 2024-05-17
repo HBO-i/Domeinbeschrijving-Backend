@@ -8,6 +8,13 @@ use App\Http\Services\DescriptionService;
 
 class ProfessionalSkillsController extends Controller
 {
+    private DescriptionService $descriptionService;
+
+    public function __construct()
+    {
+        $this->descriptionService = new DescriptionService();
+    }
+
     /**
      * Show the professional skills descriptions.
      */
@@ -15,25 +22,7 @@ class ProfessionalSkillsController extends Controller
     {
         $validated = $request->validated();
 
-        $language = null;
-
-        if (array_key_exists('language', $validated)){
-            $language = Language::find($validated['language']);
-        } else { // Set default value to NL.
-            $language = Language::where('value', 'LIKE', 'nl')->first();
-        }
-
-        $foci = Focus::with(['translations' => function ($translations) use ($language){
-            return $translations->where('language_id', '=', $language->id);
-        }, 'competencies' => function ($competency) use ($language){
-            return $competency->with(['translations' => function ($translations) use ($language){
-                return $translations->where('language_id', '=', $language->id);
-            }, 'description' => function ($description) use ($language){
-                return $description->with(['translations' => function ($translations) use ($language){
-                    return $translations->where('language_id', '=', $language->id);
-                }]);
-            }]);
-        }])->get();
+        $foci = $this->descriptionService->getSkills($validated);
 
         return FocusResource::collection($foci);
     }

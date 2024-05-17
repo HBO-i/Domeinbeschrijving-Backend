@@ -8,10 +8,12 @@ use App\Models\ArchitectureLayer;
 use App\Models\ArchitectureLayerTranslation;
 use App\Models\Description;
 use App\Models\DescriptionTranslation;
+use App\Models\Focus;
 use App\Models\Language;
 use App\Models\Level;
 use Illuminate\Database\Seeder;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class DescriptionSeeder extends Seeder
 {
@@ -21,8 +23,18 @@ class DescriptionSeeder extends Seeder
     public function run(): void
     {
         $reader = new Xlsx();
-        $spreadsheet = $reader->load(DatabaseSeeder::get_excel_path());
+        $spreadsheet = $reader->load(DatabaseSeeder::getNLExcelPath());
+        $language = Language::where('value', 'LIKE', 'nl')->first();
 
+        $this->processSpreadsheet($spreadsheet, $language);
+
+        $spreadsheet = $reader->load(DatabaseSeeder::getENExcelPath());
+        $language = Language::where('value', 'LIKE', 'en')->first();
+
+        $this->processSpreadsheet($spreadsheet, $language);
+    }
+
+    private function processSpreadsheet(Spreadsheet $spreadsheet, Language $language){
         // Ignore Professional Skills sheet. Sheet names correspond to the Architecture Level.
         $sheetNames = array_filter($spreadsheet->getSheetNames(), function($v) {
             return $v !== 'profskills';
@@ -31,25 +43,24 @@ class DescriptionSeeder extends Seeder
         // These are used to limit the amount of database calls. Sheetnames are lowercase, and 
         // thus the values of the architecture layers and activities temporarily need to be
         // lowercase aswell.
-        $language = Language::where('value', 'LIKE', 'nl')->first();
-        $architectureLayers = ArchitectureLayerTranslation::where('language_id', '=', $language->id)->get()->transform(function ($item) {
-            $item->value = strtolower($item->value);
-            return $item;
-        });
-        $activities = ActivityTranslation::where('language_id', '=', $language->id)->get()->transform(function ($item) {
-            $item->value = strtolower($item->value);
-            return $item;
-        });
+        $architectureLayers = ArchitectureLayerTranslation::where('language_id', '=', $language->id)->get();
+
+        $activities = ActivityTranslation::where('language_id', '=', $language->id)->get();
+
         $levels = Level::get();
+
+        // Levels are defined in cells C2, E3, G2 and I2
+        $descriptionColumns = ['C', 'E', 'G', 'I'];
+
+        // Activities are defined in column 2.
+        $activitiesColumn = 'B';
 
         foreach($sheetNames as $sheetName){
             $workSheet = $spreadsheet->getSheetByName($sheetName);
-
-            // Levels are defined in cells C2, E3, G2 and I2
-            $descriptionColumns = ['C', 'E', 'G', 'I'];
-
-            // Activities are defined in column 2.
-            $activitiesColumn = 'B';
+            $architectureLayerCell = $workSheet->getCell('A1');
+            $architectureLayer = gettype($architectureLayerCell->getValue()) == 'string' 
+                            ? $architectureLayerCell->getValue() 
+                            : $architectureLayerCell->getValue()->getPlainText();
 
             // These are used for making sure that the correct activity is set when creating the description.
             $activityRows = [];
@@ -108,12 +119,23 @@ class DescriptionSeeder extends Seeder
                     if (empty($currentCell->getValue())){
                         continue;
                     }
-                    
-                    $description = Description::create([
-                        'architecture_layer_id' => $architectureLayers->where('value', $sheetName)->first()->id,
-                        'level_id' => $levels->where('value', ''.$key + 1)->first()->id,
-                        'activity_id' => $activities->where('value', strtolower($activityRows[$i]))->first()->id
-                    ]);
+
+                    $architectureLayerId = $architectureLayers->where('value', $architectureLayer)->first()->architecture_layer_id;
+                    $activityId = $activities->where('value', $activityRows[$i])->first()->activity_id;
+                    $levelId = $i + 1;
+
+                    $description = Description::where('architecture_layer_id', '=', $architectureLayerId)
+                                                ->where('activity_id', '=', $activityId)
+                                                ->where('level_id', '=', $levelId)
+                                                ->first();
+
+                    if (!$description){
+                        $description = Description::create([
+                            'architecture_layer_id' => $architectureLayerId,
+                            'level_id' => $levels->where('value', ''.$key + 1)->first()->id,
+                            'activity_id' => $activityId
+                        ]);
+                    }
 
                     DescriptionTranslation::create([
                         'value' => $currentCell->getValue(),

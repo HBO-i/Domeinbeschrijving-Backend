@@ -15,9 +15,12 @@ class CompetencyResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id' => $this->id,
-            'value' => $this->translations[0]->value,
-            'description' => new ProfessionalSkillsDescriptionResource($this->description)
+            'id' => $this->competency_id,
+            'value' => $this->competency_value,
+            'description' => [
+                'id' => $this->description_id,
+                'value' => $this->description_value
+            ]
         ];
     }
 }

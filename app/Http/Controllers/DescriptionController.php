@@ -10,7 +10,7 @@ class DescriptionController extends Controller
 {
 
     /**
-     * Display the descriptions.
+     * Show the professional duties.
      */
     public function index(IndexDescriptionRequest $request, DescriptionService $service)
     {

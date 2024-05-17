@@ -152,8 +152,8 @@ paths:
       security: []
   /api/filters:
     get:
-      summary: ''
-      operationId: getApiFilters
+      summary: 'Show the possible filters.'
+      operationId: showThePossibleFilters
       description: ''
       parameters:
         -

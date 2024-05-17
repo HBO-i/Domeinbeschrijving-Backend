@@ -10,7 +10,7 @@ use App\Http\Services\DescriptionService;
 class ExportController extends Controller
 {
     /**
-     * Retrieve the JSON for the professional duties and professional skills.
+     * Show Retrieve the JSON for the professional duties and professional skills.
      */
     public function index(ExportRequest $request, DescriptionService $service)
     {

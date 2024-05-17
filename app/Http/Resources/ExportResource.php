@@ -2,20 +2,19 @@
 
 namespace App\Http\Resources;
 
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-
+use Illuminate\Support\Collection;
 
 class ExportResource extends JsonResource
 {
     private $professionalSkills;
-    private $professionalDuties;
+    private $professionalTasks;
 
-    public function __construct(Collection $professionalSkills, array $professionalDuties)
+    public function __construct(Collection $professionalSkills, array $professionalTasks)
     {
         $this->professionalSkills = $professionalSkills;
-        $this->professionalDuties = $professionalDuties;
+        $this->professionalTasks = $professionalTasks;
     }
 
     /**
@@ -27,7 +26,7 @@ class ExportResource extends JsonResource
     {
         return [
             'professional_skills' => FocusResource::collection($this->professionalSkills),
-            'professional_duties' => $this->professionalDuties
+            'professional_tasks' => $this->professionalTasks
         ];
     }
 }

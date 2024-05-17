@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel",
-        "_postman_id": "4b4edaed-d7dd-4e93-a636-782cf6aabadd",
+        "_postman_id": "f0c899ba-3480-467f-9143-4df93b9e97b7",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -99,7 +99,7 @@
                                 },
                                 {
                                     "key": "x-ratelimit-remaining",
-                                    "value": "50"
+                                    "value": "54"
                                 },
                                 {
                                     "key": "access-control-allow-origin",
@@ -155,7 +155,7 @@
                                 },
                                 {
                                     "key": "x-ratelimit-remaining",
-                                    "value": "49"
+                                    "value": "53"
                                 },
                                 {
                                     "key": "access-control-allow-origin",
@@ -169,7 +169,7 @@
                     ]
                 },
                 {
-                    "name": "GET api\/filters",
+                    "name": "Show the possible filters.",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
@@ -218,7 +218,7 @@
                                 },
                                 {
                                     "key": "x-ratelimit-remaining",
-                                    "value": "48"
+                                    "value": "52"
                                 },
                                 {
                                     "key": "access-control-allow-origin",
@@ -281,7 +281,7 @@
                                 },
                                 {
                                     "key": "x-ratelimit-remaining",
-                                    "value": "47"
+                                    "value": "51"
                                 },
                                 {
                                     "key": "access-control-allow-origin",
@@ -374,7 +374,7 @@
                                 },
                                 {
                                     "key": "x-ratelimit-remaining",
-                                    "value": "46"
+                                    "value": "50"
                                 },
                                 {
                                     "key": "access-control-allow-origin",

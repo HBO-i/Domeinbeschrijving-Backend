@@ -5,7 +5,6 @@ namespace App\Http\Services;
 use App\Models\Language;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use App\Models\Focus;
 
 class DescriptionService
 {
@@ -33,20 +32,30 @@ class DescriptionService
         } else { // Set default value to NL.
             $language = Language::where('value', 'LIKE', 'nl')->first();
         }
+        
+        $query = DB::table('foci')->select(
+            'foci.id AS focus_id',
+            'focus_translations.value AS focus_value',
+            'competencies.id AS competency_id',
+            'competency_translations.value AS competency_value',
+            'professional_skills_descriptions.id AS description_id',
+            'professional_skills_description_translations.value AS description_value'
+        )->join('focus_translations', 'foci.id', '=', 'focus_translations.focus_id')
+        ->join('competencies', 'foci.id', '=', 'competencies.focus_id')
+        ->join('competency_translations', 'competencies.id', '=', 'competency_translations.competency_id')
+        ->join('professional_skills_descriptions', 'competencies.id', '=', 'professional_skills_descriptions.competency_id')
+        ->join('professional_skills_description_translations', 'professional_skills_descriptions.id', '=', 'professional_skills_description_translations.professional_skills_description_id', 'inner')
+        ->where('focus_translations.language_id', '=', $language->id)
+        ->where('competency_translations.language_id', '=', $language->id)
+        ->where('professional_skills_description_translations.language_id', '=', $language->id);
 
-        $foci = Focus::with(['translations' => function ($translations) use ($language){
-            return $translations->where('language_id', '=', $language->id);
-        }, 'competencies' => function ($competency) use ($language){
-            return $competency->with(['translations' => function ($translations) use ($language){
-                return $translations->where('language_id', '=', $language->id);
-            }, 'description' => function ($description) use ($language){
-                return $description->with(['translations' => function ($translations) use ($language){
-                    return $translations->where('language_id', '=', $language->id);
-                }]);
-            }]);
-        }])->get();
+        if(array_key_exists('search', $validated)){
+            $query->where('professional_skills_description_translations.value', 'LIKE', '%'.$validated['search'].'%');
+        }
 
-        return $foci;
+        $foci = $query->get();
+
+        return $this->groupProfessionalSkills($foci);
     }
 
     /**
@@ -78,7 +87,10 @@ class DescriptionService
             ->join('description_translations', 'descriptions.id', '=', 'description_translations.description_id')
             ->join('activity_translations', 'activity_translations.activity_id', '=', 'descriptions.activity_id')
             ->join('architecture_layer_translations', 'architecture_layer_translations.architecture_layer_id', '=', 'descriptions.architecture_layer_id')
-            ->join('levels', 'levels.id', '=', 'descriptions.level_id');
+            ->join('levels', 'levels.id', '=', 'descriptions.level_id')
+            ->orderby('descriptions.architecture_layer_id')
+            ->orderBy('descriptions.activity_id')
+            ->orderBy('levels.id');
 
         // Apply the search filter.
         if (isset($validated['search'])){
@@ -109,6 +121,17 @@ class DescriptionService
         $descriptions = $this->groupDescriptions($descriptionQuery->get(), explode(',', $validated['grouping']));
 
         return $descriptions;
+    }
+
+    private function groupProfessionalSkills(Collection $descriptions)
+    {
+        $foci = $descriptions->unique('focus_id');
+
+        foreach($foci as $focus){
+            $focus->competencies = $descriptions->where('focus_id', '=', $focus->focus_id);
+        }
+
+        return $foci;
     }
 
     /**

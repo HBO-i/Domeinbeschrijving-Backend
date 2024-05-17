@@ -2,16 +2,15 @@
 
 namespace Database\Seeders;
 
-use App\Models\Competency;
 use App\Models\CompetencyTranslation;
-use App\Models\Focus;
-use App\Models\FocusTranslation;
 use App\Models\Language;
 use App\Models\ProfessionalSkillsDescription;
 use App\Models\ProfessionalSkillsDescriptionTranslation;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Seeder;
 use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 class ProfessionalSkillsDescriptionSeeder extends Seeder
 {
@@ -20,9 +19,28 @@ class ProfessionalSkillsDescriptionSeeder extends Seeder
      */
     public function run(): void
     {
-        $reader = new Xlsx();
-        $spreadsheet = $reader->load(DatabaseSeeder::get_excel_path());
+        for($i = 0; $i < 12; $i++){
+            ProfessionalSkillsDescription::create([
+                'competency_id' => $i + 1
+            ]);
+        }
 
+        $reader = new Xlsx();
+        $spreadsheet = $reader->load(DatabaseSeeder::getNLExcelPath());
+
+        $language = Language::where('value', 'LIKE', 'nl')->first();
+
+        $this->readExcelSheet($spreadsheet, $language);
+
+        $spreadsheet = $reader->load(DatabaseSeeder::getENExcelPath());
+
+        $language = Language::where('value', 'LIKE', 'en')->first();
+
+        $this->readExcelSheet($spreadsheet, $language);
+    }
+
+    private function readExcelSheet(Spreadsheet $spreadsheet, Language $language) : void
+    {
         $sheetNames = array_filter($spreadsheet->getSheetNames(), function ($v) {
             return $v === 'profskills';
         });
@@ -31,21 +49,16 @@ class ProfessionalSkillsDescriptionSeeder extends Seeder
             $sheetName = reset($sheetNames);
             
             $workSheet = $spreadsheet->getSheetByName($sheetName);
-
-            $language = Language::where('value', 'LIKE', 'nl')->first();
             
             $seperatorColor = 'C00000';
             $currentRowIndex = 3;
-            $focusColumn = 'A';
             $competencyColumn = 'B';
             $descriptionColumn = 'C';
-
-            $focuses = collect();
 
             $endRow = null;
 
             while($endRow === null){
-                $currentCell = $workSheet->getCell($focusColumn.$currentRowIndex);
+                $currentCell = $workSheet->getCell($descriptionColumn.$currentRowIndex);
 
                 if ($currentCell->getStyle()->getFill()->getStartColor()->getRGB() === $seperatorColor) {
                     $currentRowIndex++;
@@ -56,46 +69,17 @@ class ProfessionalSkillsDescriptionSeeder extends Seeder
                     $endRow = $currentRowIndex;
                     continue;
                 }
-                
-                $focus = null;
-                $competency = null;
 
-                $cellValue = $this->getCellValue($currentCell);
-
-                if ($cellValue === null || $cellValue === '' || ctype_space($cellValue)){
-                    $focus = $focuses->last();
-                } else {
-                    $focus = Focus::create();
-                    $focuses->add($focus);
-
-                    FocusTranslation::create([
-                        'value' => $cellValue,
-                        'focus_id' => $focus->id,
-                        'language_id' => $language->id
-                    ]);
-                }
+                $description = $this->getCellValue($currentCell);
 
                 $currentCell = $workSheet->getCell($competencyColumn.$currentRowIndex);
-                $cellValue = $this->getCellValue($currentCell);
+                $competencyTranslationValue = $this->getCellValue($currentCell);
+                $competencyTranslation = CompetencyTranslation::where('value', 'LIKE', rtrim($competencyTranslationValue))->first();
+                $professionalSkillsDescription = $competencyTranslation->competency()->first()->description()->first();
 
-                $competency = Competency::create([
-                    'focus_id' => $focus->id
-                ]);
-                CompetencyTranslation::create([
-                    'value' => $cellValue,
-                    'competency_id' => $competency->id,
-                    'language_id' => $language->id
-                ]);
-
-                $currentCell = $workSheet->getCell($descriptionColumn.$currentRowIndex);
-                $cellValue = $this->getCellValue($currentCell);
-
-                $description = ProfessionalSkillsDescription::create([
-                    'competency_id'=> $competency->id
-                ]);
                 ProfessionalSkillsDescriptionTranslation::create([
-                    'value' => $cellValue,
-                    'professional_skills_description_id' => $description->id,
+                    'value' => $description,
+                    'professional_skills_description_id' => $professionalSkillsDescription->id,
                     'language_id' => $language->id
                 ]);
 

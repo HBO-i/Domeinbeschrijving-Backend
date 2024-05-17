@@ -22,7 +22,8 @@ class ProfessionalSkillsIndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'language' => 'sometimes|integer|exists:languages,id'
+            'language' => 'sometimes|integer|exists:languages,id',
+            'search' => 'sometimes|string'
         ];
     }
 
@@ -32,6 +33,10 @@ class ProfessionalSkillsIndexRequest extends FormRequest
             'language' => [
                 'description' => 'The id of the language to use.',
                 'example' => 1
+            ],
+            'search' => [
+                'description' => 'The search query.',
+                'example' => 'sustain'
             ]
         ];
     }
