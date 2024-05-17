@@ -30,7 +30,6 @@ services:
       APP_NAME: HBO-I
       APP_URL: https://api.domeinbeschrijving.hbo-i.nl
       ASSET_URL: https://api.domeinbeschrijving.hbo-i.nl
-
     networks:
       - internal
     volumes:
