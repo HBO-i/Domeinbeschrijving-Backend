@@ -5,12 +5,12 @@ info:
   version: 1.0.0
 servers:
   -
-    url: 'http://localhost:8000'
+    url: 'http://localhost'
 paths:
   /api/descriptions:
     get:
-      summary: 'Display the descriptions.'
-      operationId: displayTheDescriptions
+      summary: 'Show the professional duties.'
+      operationId: showTheProfessionalDuties
       description: ''
       parameters:
         -
@@ -86,30 +86,54 @@ paths:
             items:
               type: integer
       responses:
-        200:
+        422:
           description: ''
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  type: object
+                type: object
                 example:
-                  -
-                    id: 2
-                    value: Organisatieprocessen
-                    items:
-                      -
-                        id: 3
-                        value: Ontwerpen
+                  message: 'The selected language is invalid. (and 3 more errors)'
+                  errors:
+                    language:
+                      - 'The selected language is invalid.'
+                    level.0:
+                      - 'The selected level.0 is invalid.'
+                    activity.0:
+                      - 'The selected activity.0 is invalid.'
+                    architecture_layer.0:
+                      - 'The selected architecture_layer.0 is invalid.'
+                properties:
+                  message:
+                    type: string
+                    example: 'The selected language is invalid. (and 3 more errors)'
+                  errors:
+                    type: object
+                    properties:
+                      language:
+                        type: array
+                        example:
+                          - 'The selected language is invalid.'
                         items:
-                          -
-                            id: 1
-                            value: '1'
-                            items:
-                              - 'Ontwerpen van enkele organisatieprocessen, enkele gegevensstromen van gestructureerde data, de inrichting van een organisatieonderdeel en/of een deel van de informatievoorziening'
-                              - 'Opstellen van een eenvoudig datamanagementplan'
-                              - 'Opstellen van een eenvoudig implementatieplan'
+                          type: string
+                      level.0:
+                        type: array
+                        example:
+                          - 'The selected level.0 is invalid.'
+                        items:
+                          type: string
+                      activity.0:
+                        type: array
+                        example:
+                          - 'The selected activity.0 is invalid.'
+                        items:
+                          type: string
+                      architecture_layer.0:
+                        type: array
+                        example:
+                          - 'The selected architecture_layer.0 is invalid.'
+                        items:
+                          type: string
       tags:
         - Endpoints
       security: []
@@ -127,26 +151,11 @@ paths:
               schema:
                 type: object
                 example:
-                  data:
-                    -
-                      id: 1
-                      value: nl
+                  data: []
                 properties:
                   data:
                     type: array
-                    example:
-                      -
-                        id: 1
-                        value: nl
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                          example: 1
-                        value:
-                          type: string
-                          example: nl
+                    example: []
       tags:
         - Endpoints
       security: []
@@ -167,141 +176,30 @@ paths:
             description: 'The id of the language.'
             example: 1
       responses:
-        200:
+        422:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  data:
-                    levels:
-                      -
-                        id: 1
-                        value: '1'
-                      -
-                        id: 2
-                        value: '2'
-                      -
-                        id: 3
-                        value: '3'
-                      -
-                        id: 4
-                        value: '4'
-                    activities:
-                      -
-                        id: 1
-                        value: Analyseren
-                      -
-                        id: 2
-                        value: Adviseren
-                      -
-                        id: 3
-                        value: Ontwerpen
-                      -
-                        id: 4
-                        value: Realiseren
-                      -
-                        id: 5
-                        value: 'Manage & Control'
-                    architecture_layers:
-                      -
-                        id: 1
-                        value: Gebruikersinteractie
-                      -
-                        id: 2
-                        value: Organisatieprocessen
-                      -
-                        id: 3
-                        value: Infrastructuur
-                      -
-                        id: 4
-                        value: Software
-                      -
-                        id: 5
-                        value: Hardware-Interfacing
+                  message: 'The selected language is invalid.'
+                  errors:
+                    language:
+                      - 'The selected language is invalid.'
                 properties:
-                  data:
+                  message:
+                    type: string
+                    example: 'The selected language is invalid.'
+                  errors:
                     type: object
                     properties:
-                      levels:
+                      language:
                         type: array
                         example:
-                          -
-                            id: 1
-                            value: '1'
-                          -
-                            id: 2
-                            value: '2'
-                          -
-                            id: 3
-                            value: '3'
-                          -
-                            id: 4
-                            value: '4'
+                          - 'The selected language is invalid.'
                         items:
-                          type: object
-                          properties:
-                            id:
-                              type: integer
-                              example: 1
-                            value:
-                              type: string
-                              example: '1'
-                      activities:
-                        type: array
-                        example:
-                          -
-                            id: 1
-                            value: Analyseren
-                          -
-                            id: 2
-                            value: Adviseren
-                          -
-                            id: 3
-                            value: Ontwerpen
-                          -
-                            id: 4
-                            value: Realiseren
-                          -
-                            id: 5
-                            value: 'Manage & Control'
-                        items:
-                          type: object
-                          properties:
-                            id:
-                              type: integer
-                              example: 1
-                            value:
-                              type: string
-                              example: Analyseren
-                      architecture_layers:
-                        type: array
-                        example:
-                          -
-                            id: 1
-                            value: Gebruikersinteractie
-                          -
-                            id: 2
-                            value: Organisatieprocessen
-                          -
-                            id: 3
-                            value: Infrastructuur
-                          -
-                            id: 4
-                            value: Software
-                          -
-                            id: 5
-                            value: Hardware-Interfacing
-                        items:
-                          type: object
-                          properties:
-                            id:
-                              type: integer
-                              example: 1
-                            value:
-                              type: string
-                              example: Gebruikersinteractie
+                          type: string
       tags:
         - Endpoints
       security: []
@@ -321,250 +219,48 @@ paths:
             type: integer
             description: 'The id of the language to use.'
             example: 1
+        -
+          in: query
+          name: search
+          description: 'The search query.'
+          example: sustain
+          required: false
+          schema:
+            type: string
+            description: 'The search query.'
+            example: sustain
       responses:
-        200:
+        422:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  data:
-                    -
-                      id: 1
-                      value: "Toekomstgericht organiseren\_"
-                      competencies:
-                        -
-                          id: 1
-                          value: "Organisatorische context\_"
-                          description:
-                            id: 1
-                            value: 'Je brengt verschillende omgevingsfactoren (bijvoorbeeld maatschappelijke ontwikkelingen zoals vraagstukken op het gebied van duurzaamheid en/of inclusie) die de uitwerking van de opdracht kunnen beïnvloeden in beeld en onderneemt op basis hiervan vervolgstappen'
-                        -
-                          id: 2
-                          value: "Ethiek\_"
-                          description:
-                            id: 2
-                            value: 'Je weegt maatschappelijke en ethische aspecten (zoals duurzaamheid en inclusie) in de (toegepaste) technologische en professionele context en betrekt deze in het professioneel handelen'
-                        -
-                          id: 3
-                          value: Procesmanagement
-                          description:
-                            id: 3
-                            value: 'Je organiseert en realiseert de opdracht (bijvoorbeeld een projectopdracht) op basis van gestelde randvoorwaarden en draagt zorg voor een duurzame inbedding van de oplevering in de organisatie'
-                    -
-                      id: 2
-                      value: "Onderzoekend vermogen\_"
-                      competencies:
-                        -
-                          id: 4
-                          value: "Methodische Probleemaanpak\_"
-                          description:
-                            id: 4
-                            value: 'Je brengt relevante vraagstukken en/of mogelijkheden in beeld, identificeert welke kennis ontbreekt en plant vervolgstappen in het onderzoek op gestructureerde en kritische wijze, waarbij je kiest voor methoden die passen bij het voorliggende vraagstuk'
-                        -
-                          id: 5
-                          value: "Onderzoek\_"
-                          description:
-                            id: 5
-                            value: "Je voert onderzoek doorlopend met een open houding op onderbouwde,\_ pragmatische, gestructureerde en kritische wijze uit"
-                        -
-                          id: 6
-                          value: Oplossing
-                          description:
-                            id: 6
-                            value: 'Je past de uit onderzoek verkregen informatie toe binnen de context van het vraagstuk en doet voorstellen op basis van de verkregen informatie. Je blijft hierbij kritisch en open voor alternatieve ideeën en werkwijzen'
-                    -
-                      id: 3
-                      value: "Persoonlijk leiderschap\_"
-                      competencies:
-                        -
-                          id: 7
-                          value: "Ondernemend zijn\_"
-                          description:
-                            id: 7
-                            value: 'Je werkt doelgericht en acteert weloverwogen op nieuwe kansen/initiatieven, waarin je samenwerkingspartners betrekt (denk aan teamleden, opdrachtgevers, eindgebruikers, maatschappelijke organisaties en/of andere stakeholders)'
-                        -
-                          id: 8
-                          value: "Persoonlijke ontwikkeling\_"
-                          description:
-                            id: 8
-                            value: 'Je onderbouwt studie- en loopbaankeuzes en stuurt je eigen leerontwikkeling beargumenteerd bij (bijvoorbeeld middels reflectie en/of feedback)'
-                        -
-                          id: 9
-                          value: "Persoonlijke profilering\_"
-                          description:
-                            id: 9
-                            value: 'Je evalueert regelmatig persoonlijke ambities en kwaliteiten in relatie tot de gewenste positionering in het werkveld en onderneemt hier op passende wijze actie op'
-                    -
-                      id: 4
-                      value: "Doelgericht interacteren\_"
-                      competencies:
-                        -
-                          id: 10
-                          value: "Partners\_"
-                          description:
-                            id: 10
-                            value: 'Je onderhoudt actief de relatie met relevante samenwerkingspartners (denk aan teamleden, opdrachtgevers, eindgebruikers, maatschappelijke organisaties en/of andere stakeholders)'
-                        -
-                          id: 11
-                          value: Communicatie
-                          description:
-                            id: 11
-                            value: 'Je stemt je communicatie weloverwogen en doelgericht af op de doelgroep(en)'
-                        -
-                          id: 12
-                          value: Samenwerking
-                          description:
-                            id: 12
-                            value: 'Je werkt bewust, op constructieve wijze en in de geschikte vorm samen, waarbij je verantwoordelijkheid neemt voor jouw deel in de samenwerking (bijvoorbeeld in interdisciplinaire en/of interculturele context) en het eindresultaat'
+                  message: 'The selected language is invalid.'
+                  errors:
+                    language:
+                      - 'The selected language is invalid.'
                 properties:
-                  data:
-                    type: array
-                    example:
-                      -
-                        id: 1
-                        value: "Toekomstgericht organiseren\_"
-                        competencies:
-                          -
-                            id: 1
-                            value: "Organisatorische context\_"
-                            description:
-                              id: 1
-                              value: 'Je brengt verschillende omgevingsfactoren (bijvoorbeeld maatschappelijke ontwikkelingen zoals vraagstukken op het gebied van duurzaamheid en/of inclusie) die de uitwerking van de opdracht kunnen beïnvloeden in beeld en onderneemt op basis hiervan vervolgstappen'
-                          -
-                            id: 2
-                            value: "Ethiek\_"
-                            description:
-                              id: 2
-                              value: 'Je weegt maatschappelijke en ethische aspecten (zoals duurzaamheid en inclusie) in de (toegepaste) technologische en professionele context en betrekt deze in het professioneel handelen'
-                          -
-                            id: 3
-                            value: Procesmanagement
-                            description:
-                              id: 3
-                              value: 'Je organiseert en realiseert de opdracht (bijvoorbeeld een projectopdracht) op basis van gestelde randvoorwaarden en draagt zorg voor een duurzame inbedding van de oplevering in de organisatie'
-                      -
-                        id: 2
-                        value: "Onderzoekend vermogen\_"
-                        competencies:
-                          -
-                            id: 4
-                            value: "Methodische Probleemaanpak\_"
-                            description:
-                              id: 4
-                              value: 'Je brengt relevante vraagstukken en/of mogelijkheden in beeld, identificeert welke kennis ontbreekt en plant vervolgstappen in het onderzoek op gestructureerde en kritische wijze, waarbij je kiest voor methoden die passen bij het voorliggende vraagstuk'
-                          -
-                            id: 5
-                            value: "Onderzoek\_"
-                            description:
-                              id: 5
-                              value: "Je voert onderzoek doorlopend met een open houding op onderbouwde,\_ pragmatische, gestructureerde en kritische wijze uit"
-                          -
-                            id: 6
-                            value: Oplossing
-                            description:
-                              id: 6
-                              value: 'Je past de uit onderzoek verkregen informatie toe binnen de context van het vraagstuk en doet voorstellen op basis van de verkregen informatie. Je blijft hierbij kritisch en open voor alternatieve ideeën en werkwijzen'
-                      -
-                        id: 3
-                        value: "Persoonlijk leiderschap\_"
-                        competencies:
-                          -
-                            id: 7
-                            value: "Ondernemend zijn\_"
-                            description:
-                              id: 7
-                              value: 'Je werkt doelgericht en acteert weloverwogen op nieuwe kansen/initiatieven, waarin je samenwerkingspartners betrekt (denk aan teamleden, opdrachtgevers, eindgebruikers, maatschappelijke organisaties en/of andere stakeholders)'
-                          -
-                            id: 8
-                            value: "Persoonlijke ontwikkeling\_"
-                            description:
-                              id: 8
-                              value: 'Je onderbouwt studie- en loopbaankeuzes en stuurt je eigen leerontwikkeling beargumenteerd bij (bijvoorbeeld middels reflectie en/of feedback)'
-                          -
-                            id: 9
-                            value: "Persoonlijke profilering\_"
-                            description:
-                              id: 9
-                              value: 'Je evalueert regelmatig persoonlijke ambities en kwaliteiten in relatie tot de gewenste positionering in het werkveld en onderneemt hier op passende wijze actie op'
-                      -
-                        id: 4
-                        value: "Doelgericht interacteren\_"
-                        competencies:
-                          -
-                            id: 10
-                            value: "Partners\_"
-                            description:
-                              id: 10
-                              value: 'Je onderhoudt actief de relatie met relevante samenwerkingspartners (denk aan teamleden, opdrachtgevers, eindgebruikers, maatschappelijke organisaties en/of andere stakeholders)'
-                          -
-                            id: 11
-                            value: Communicatie
-                            description:
-                              id: 11
-                              value: 'Je stemt je communicatie weloverwogen en doelgericht af op de doelgroep(en)'
-                          -
-                            id: 12
-                            value: Samenwerking
-                            description:
-                              id: 12
-                              value: 'Je werkt bewust, op constructieve wijze en in de geschikte vorm samen, waarbij je verantwoordelijkheid neemt voor jouw deel in de samenwerking (bijvoorbeeld in interdisciplinaire en/of interculturele context) en het eindresultaat'
-                    items:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                          example: 1
-                        value:
+                  message:
+                    type: string
+                    example: 'The selected language is invalid.'
+                  errors:
+                    type: object
+                    properties:
+                      language:
+                        type: array
+                        example:
+                          - 'The selected language is invalid.'
+                        items:
                           type: string
-                          example: "Toekomstgericht organiseren\_"
-                        competencies:
-                          type: array
-                          example:
-                            -
-                              id: 1
-                              value: "Organisatorische context\_"
-                              description:
-                                id: 1
-                                value: 'Je brengt verschillende omgevingsfactoren (bijvoorbeeld maatschappelijke ontwikkelingen zoals vraagstukken op het gebied van duurzaamheid en/of inclusie) die de uitwerking van de opdracht kunnen beïnvloeden in beeld en onderneemt op basis hiervan vervolgstappen'
-                            -
-                              id: 2
-                              value: "Ethiek\_"
-                              description:
-                                id: 2
-                                value: 'Je weegt maatschappelijke en ethische aspecten (zoals duurzaamheid en inclusie) in de (toegepaste) technologische en professionele context en betrekt deze in het professioneel handelen'
-                            -
-                              id: 3
-                              value: Procesmanagement
-                              description:
-                                id: 3
-                                value: 'Je organiseert en realiseert de opdracht (bijvoorbeeld een projectopdracht) op basis van gestelde randvoorwaarden en draagt zorg voor een duurzame inbedding van de oplevering in de organisatie'
-                          items:
-                            type: object
-                            properties:
-                              id:
-                                type: integer
-                                example: 1
-                              value:
-                                type: string
-                                example: "Organisatorische context\_"
-                              description:
-                                type: object
-                                properties:
-                                  id:
-                                    type: integer
-                                    example: 1
-                                  value:
-                                    type: string
-                                    example: 'Je brengt verschillende omgevingsfactoren (bijvoorbeeld maatschappelijke ontwikkelingen zoals vraagstukken op het gebied van duurzaamheid en/of inclusie) die de uitwerking van de opdracht kunnen beïnvloeden in beeld en onderneemt op basis hiervan vervolgstappen'
       tags:
         - Endpoints
       security: []
   /api/export:
     get:
-      summary: 'Retrieve the JSON for the professional duties and professional skills.'
-      operationId: retrieveTheJSONForTheProfessionalDutiesAndProfessionalSkills
+      summary: 'Show Retrieve the JSON for the professional duties and professional skills.'
+      operationId: showRetrieveTheJSONForTheProfessionalDutiesAndProfessionalSkills
       description: ''
       parameters:
         -
@@ -640,312 +336,54 @@ paths:
             items:
               type: integer
       responses:
-        200:
+        422:
           description: ''
           content:
             application/json:
               schema:
                 type: object
                 example:
-                  data:
-                    professional_skills:
-                      -
-                        id: 1
-                        value: "Toekomstgericht organiseren\_"
-                        competencies:
-                          -
-                            id: 1
-                            value: "Organisatorische context\_"
-                            description:
-                              id: 1
-                              value: 'Je brengt verschillende omgevingsfactoren (bijvoorbeeld maatschappelijke ontwikkelingen zoals vraagstukken op het gebied van duurzaamheid en/of inclusie) die de uitwerking van de opdracht kunnen beïnvloeden in beeld en onderneemt op basis hiervan vervolgstappen'
-                          -
-                            id: 2
-                            value: "Ethiek\_"
-                            description:
-                              id: 2
-                              value: 'Je weegt maatschappelijke en ethische aspecten (zoals duurzaamheid en inclusie) in de (toegepaste) technologische en professionele context en betrekt deze in het professioneel handelen'
-                          -
-                            id: 3
-                            value: Procesmanagement
-                            description:
-                              id: 3
-                              value: 'Je organiseert en realiseert de opdracht (bijvoorbeeld een projectopdracht) op basis van gestelde randvoorwaarden en draagt zorg voor een duurzame inbedding van de oplevering in de organisatie'
-                      -
-                        id: 2
-                        value: "Onderzoekend vermogen\_"
-                        competencies:
-                          -
-                            id: 4
-                            value: "Methodische Probleemaanpak\_"
-                            description:
-                              id: 4
-                              value: 'Je brengt relevante vraagstukken en/of mogelijkheden in beeld, identificeert welke kennis ontbreekt en plant vervolgstappen in het onderzoek op gestructureerde en kritische wijze, waarbij je kiest voor methoden die passen bij het voorliggende vraagstuk'
-                          -
-                            id: 5
-                            value: "Onderzoek\_"
-                            description:
-                              id: 5
-                              value: "Je voert onderzoek doorlopend met een open houding op onderbouwde,\_ pragmatische, gestructureerde en kritische wijze uit"
-                          -
-                            id: 6
-                            value: Oplossing
-                            description:
-                              id: 6
-                              value: 'Je past de uit onderzoek verkregen informatie toe binnen de context van het vraagstuk en doet voorstellen op basis van de verkregen informatie. Je blijft hierbij kritisch en open voor alternatieve ideeën en werkwijzen'
-                      -
-                        id: 3
-                        value: "Persoonlijk leiderschap\_"
-                        competencies:
-                          -
-                            id: 7
-                            value: "Ondernemend zijn\_"
-                            description:
-                              id: 7
-                              value: 'Je werkt doelgericht en acteert weloverwogen op nieuwe kansen/initiatieven, waarin je samenwerkingspartners betrekt (denk aan teamleden, opdrachtgevers, eindgebruikers, maatschappelijke organisaties en/of andere stakeholders)'
-                          -
-                            id: 8
-                            value: "Persoonlijke ontwikkeling\_"
-                            description:
-                              id: 8
-                              value: 'Je onderbouwt studie- en loopbaankeuzes en stuurt je eigen leerontwikkeling beargumenteerd bij (bijvoorbeeld middels reflectie en/of feedback)'
-                          -
-                            id: 9
-                            value: "Persoonlijke profilering\_"
-                            description:
-                              id: 9
-                              value: 'Je evalueert regelmatig persoonlijke ambities en kwaliteiten in relatie tot de gewenste positionering in het werkveld en onderneemt hier op passende wijze actie op'
-                      -
-                        id: 4
-                        value: "Doelgericht interacteren\_"
-                        competencies:
-                          -
-                            id: 10
-                            value: "Partners\_"
-                            description:
-                              id: 10
-                              value: 'Je onderhoudt actief de relatie met relevante samenwerkingspartners (denk aan teamleden, opdrachtgevers, eindgebruikers, maatschappelijke organisaties en/of andere stakeholders)'
-                          -
-                            id: 11
-                            value: Communicatie
-                            description:
-                              id: 11
-                              value: 'Je stemt je communicatie weloverwogen en doelgericht af op de doelgroep(en)'
-                          -
-                            id: 12
-                            value: Samenwerking
-                            description:
-                              id: 12
-                              value: 'Je werkt bewust, op constructieve wijze en in de geschikte vorm samen, waarbij je verantwoordelijkheid neemt voor jouw deel in de samenwerking (bijvoorbeeld in interdisciplinaire en/of interculturele context) en het eindresultaat'
-                    professional_duties:
-                      -
-                        id: 2
-                        value: Organisatieprocessen
-                        items:
-                          -
-                            id: 3
-                            value: Ontwerpen
-                            items:
-                              -
-                                id: 1
-                                value: '1'
-                                items:
-                                  - 'Ontwerpen van enkele organisatieprocessen, enkele gegevensstromen van gestructureerde data, de inrichting van een organisatieonderdeel en/of een deel van de informatievoorziening'
-                                  - 'Opstellen van een eenvoudig datamanagementplan'
-                                  - 'Opstellen van een eenvoudig implementatieplan'
+                  message: 'The selected language is invalid. (and 3 more errors)'
+                  errors:
+                    language:
+                      - 'The selected language is invalid.'
+                    level.0:
+                      - 'The selected level.0 is invalid.'
+                    activity.0:
+                      - 'The selected activity.0 is invalid.'
+                    architecture_layer.0:
+                      - 'The selected architecture_layer.0 is invalid.'
                 properties:
-                  data:
+                  message:
+                    type: string
+                    example: 'The selected language is invalid. (and 3 more errors)'
+                  errors:
                     type: object
                     properties:
-                      professional_skills:
+                      language:
                         type: array
                         example:
-                          -
-                            id: 1
-                            value: "Toekomstgericht organiseren\_"
-                            competencies:
-                              -
-                                id: 1
-                                value: "Organisatorische context\_"
-                                description:
-                                  id: 1
-                                  value: 'Je brengt verschillende omgevingsfactoren (bijvoorbeeld maatschappelijke ontwikkelingen zoals vraagstukken op het gebied van duurzaamheid en/of inclusie) die de uitwerking van de opdracht kunnen beïnvloeden in beeld en onderneemt op basis hiervan vervolgstappen'
-                              -
-                                id: 2
-                                value: "Ethiek\_"
-                                description:
-                                  id: 2
-                                  value: 'Je weegt maatschappelijke en ethische aspecten (zoals duurzaamheid en inclusie) in de (toegepaste) technologische en professionele context en betrekt deze in het professioneel handelen'
-                              -
-                                id: 3
-                                value: Procesmanagement
-                                description:
-                                  id: 3
-                                  value: 'Je organiseert en realiseert de opdracht (bijvoorbeeld een projectopdracht) op basis van gestelde randvoorwaarden en draagt zorg voor een duurzame inbedding van de oplevering in de organisatie'
-                          -
-                            id: 2
-                            value: "Onderzoekend vermogen\_"
-                            competencies:
-                              -
-                                id: 4
-                                value: "Methodische Probleemaanpak\_"
-                                description:
-                                  id: 4
-                                  value: 'Je brengt relevante vraagstukken en/of mogelijkheden in beeld, identificeert welke kennis ontbreekt en plant vervolgstappen in het onderzoek op gestructureerde en kritische wijze, waarbij je kiest voor methoden die passen bij het voorliggende vraagstuk'
-                              -
-                                id: 5
-                                value: "Onderzoek\_"
-                                description:
-                                  id: 5
-                                  value: "Je voert onderzoek doorlopend met een open houding op onderbouwde,\_ pragmatische, gestructureerde en kritische wijze uit"
-                              -
-                                id: 6
-                                value: Oplossing
-                                description:
-                                  id: 6
-                                  value: 'Je past de uit onderzoek verkregen informatie toe binnen de context van het vraagstuk en doet voorstellen op basis van de verkregen informatie. Je blijft hierbij kritisch en open voor alternatieve ideeën en werkwijzen'
-                          -
-                            id: 3
-                            value: "Persoonlijk leiderschap\_"
-                            competencies:
-                              -
-                                id: 7
-                                value: "Ondernemend zijn\_"
-                                description:
-                                  id: 7
-                                  value: 'Je werkt doelgericht en acteert weloverwogen op nieuwe kansen/initiatieven, waarin je samenwerkingspartners betrekt (denk aan teamleden, opdrachtgevers, eindgebruikers, maatschappelijke organisaties en/of andere stakeholders)'
-                              -
-                                id: 8
-                                value: "Persoonlijke ontwikkeling\_"
-                                description:
-                                  id: 8
-                                  value: 'Je onderbouwt studie- en loopbaankeuzes en stuurt je eigen leerontwikkeling beargumenteerd bij (bijvoorbeeld middels reflectie en/of feedback)'
-                              -
-                                id: 9
-                                value: "Persoonlijke profilering\_"
-                                description:
-                                  id: 9
-                                  value: 'Je evalueert regelmatig persoonlijke ambities en kwaliteiten in relatie tot de gewenste positionering in het werkveld en onderneemt hier op passende wijze actie op'
-                          -
-                            id: 4
-                            value: "Doelgericht interacteren\_"
-                            competencies:
-                              -
-                                id: 10
-                                value: "Partners\_"
-                                description:
-                                  id: 10
-                                  value: 'Je onderhoudt actief de relatie met relevante samenwerkingspartners (denk aan teamleden, opdrachtgevers, eindgebruikers, maatschappelijke organisaties en/of andere stakeholders)'
-                              -
-                                id: 11
-                                value: Communicatie
-                                description:
-                                  id: 11
-                                  value: 'Je stemt je communicatie weloverwogen en doelgericht af op de doelgroep(en)'
-                              -
-                                id: 12
-                                value: Samenwerking
-                                description:
-                                  id: 12
-                                  value: 'Je werkt bewust, op constructieve wijze en in de geschikte vorm samen, waarbij je verantwoordelijkheid neemt voor jouw deel in de samenwerking (bijvoorbeeld in interdisciplinaire en/of interculturele context) en het eindresultaat'
+                          - 'The selected language is invalid.'
                         items:
-                          type: object
-                          properties:
-                            id:
-                              type: integer
-                              example: 1
-                            value:
-                              type: string
-                              example: "Toekomstgericht organiseren\_"
-                            competencies:
-                              type: array
-                              example:
-                                -
-                                  id: 1
-                                  value: "Organisatorische context\_"
-                                  description:
-                                    id: 1
-                                    value: 'Je brengt verschillende omgevingsfactoren (bijvoorbeeld maatschappelijke ontwikkelingen zoals vraagstukken op het gebied van duurzaamheid en/of inclusie) die de uitwerking van de opdracht kunnen beïnvloeden in beeld en onderneemt op basis hiervan vervolgstappen'
-                                -
-                                  id: 2
-                                  value: "Ethiek\_"
-                                  description:
-                                    id: 2
-                                    value: 'Je weegt maatschappelijke en ethische aspecten (zoals duurzaamheid en inclusie) in de (toegepaste) technologische en professionele context en betrekt deze in het professioneel handelen'
-                                -
-                                  id: 3
-                                  value: Procesmanagement
-                                  description:
-                                    id: 3
-                                    value: 'Je organiseert en realiseert de opdracht (bijvoorbeeld een projectopdracht) op basis van gestelde randvoorwaarden en draagt zorg voor een duurzame inbedding van de oplevering in de organisatie'
-                              items:
-                                type: object
-                                properties:
-                                  id:
-                                    type: integer
-                                    example: 1
-                                  value:
-                                    type: string
-                                    example: "Organisatorische context\_"
-                                  description:
-                                    type: object
-                                    properties:
-                                      id: { type: integer, example: 1 }
-                                      value: { type: string, example: 'Je brengt verschillende omgevingsfactoren (bijvoorbeeld maatschappelijke ontwikkelingen zoals vraagstukken op het gebied van duurzaamheid en/of inclusie) die de uitwerking van de opdracht kunnen beïnvloeden in beeld en onderneemt op basis hiervan vervolgstappen' }
-                      professional_duties:
+                          type: string
+                      level.0:
                         type: array
                         example:
-                          -
-                            id: 2
-                            value: Organisatieprocessen
-                            items:
-                              -
-                                id: 3
-                                value: Ontwerpen
-                                items:
-                                  -
-                                    id: 1
-                                    value: '1'
-                                    items:
-                                      - 'Ontwerpen van enkele organisatieprocessen, enkele gegevensstromen van gestructureerde data, de inrichting van een organisatieonderdeel en/of een deel van de informatievoorziening'
-                                      - 'Opstellen van een eenvoudig datamanagementplan'
-                                      - 'Opstellen van een eenvoudig implementatieplan'
+                          - 'The selected level.0 is invalid.'
                         items:
-                          type: object
-                          properties:
-                            id:
-                              type: integer
-                              example: 2
-                            value:
-                              type: string
-                              example: Organisatieprocessen
-                            items:
-                              type: array
-                              example:
-                                -
-                                  id: 3
-                                  value: Ontwerpen
-                                  items:
-                                    -
-                                      id: 1
-                                      value: '1'
-                                      items: ['Ontwerpen van enkele organisatieprocessen, enkele gegevensstromen van gestructureerde data, de inrichting van een organisatieonderdeel en/of een deel van de informatievoorziening', 'Opstellen van een eenvoudig datamanagementplan', 'Opstellen van een eenvoudig implementatieplan']
-                              items:
-                                type: object
-                                properties:
-                                  id:
-                                    type: integer
-                                    example: 3
-                                  value:
-                                    type: string
-                                    example: Ontwerpen
-                                  items:
-                                    type: array
-                                    example:
-                                      - { id: 1, value: '1', items: ['Ontwerpen van enkele organisatieprocessen, enkele gegevensstromen van gestructureerde data, de inrichting van een organisatieonderdeel en/of een deel van de informatievoorziening', 'Opstellen van een eenvoudig datamanagementplan', 'Opstellen van een eenvoudig implementatieplan'] }
-                                    items:
-                                      type: object
-                                      properties: { id: { type: integer, example: 1 }, value: { type: string, example: '1' }, items: { type: array, example: ['Ontwerpen van enkele organisatieprocessen, enkele gegevensstromen van gestructureerde data, de inrichting van een organisatieonderdeel en/of een deel van de informatievoorziening', 'Opstellen van een eenvoudig datamanagementplan', 'Opstellen van een eenvoudig implementatieplan'], items: { type: string } } }
+                          type: string
+                      activity.0:
+                        type: array
+                        example:
+                          - 'The selected activity.0 is invalid.'
+                        items:
+                          type: string
+                      architecture_layer.0:
+                        type: array
+                        example:
+                          - 'The selected architecture_layer.0 is invalid.'
+                        items:
+                          type: string
       tags:
         - Endpoints
       security: []

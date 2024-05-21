@@ -26,7 +26,7 @@
             </style>
 
     <script>
-        var tryItOutBaseUrl = "http://localhost:8000";
+        var tryItOutBaseUrl = "http://localhost";
         var useCsrf = Boolean();
         var csrfUrl = "/sanctum/csrf-cookie";
     </script>
@@ -72,7 +72,7 @@
                 </li>
                                     <ul id="tocify-subheader-endpoints" class="tocify-subheader">
                                                     <li class="tocify-item level-2" data-unique="endpoints-GETapi-descriptions">
-                                <a href="#endpoints-GETapi-descriptions">Display the descriptions.</a>
+                                <a href="#endpoints-GETapi-descriptions">Show the professional duties.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-languages">
                                 <a href="#endpoints-GETapi-languages">Display the supported languages.</a>
@@ -84,7 +84,7 @@
                                 <a href="#endpoints-GETapi-professional-skills">Show the professional skills descriptions.</a>
                             </li>
                                                                                 <li class="tocify-item level-2" data-unique="endpoints-GETapi-export">
-                                <a href="#endpoints-GETapi-export">Retrieve the JSON for the professional duties and professional skills.</a>
+                                <a href="#endpoints-GETapi-export">Show Retrieve the JSON for the professional duties and professional skills.</a>
                             </li>
                                                                         </ul>
                             </ul>
@@ -97,7 +97,7 @@
     </ul>
 
     <ul class="toc-footer" id="last-updated">
-        <li>Last updated: February 28, 2024</li>
+        <li>Last updated: May 21, 2024</li>
     </ul>
 </div>
 
@@ -106,7 +106,7 @@
     <div class="content">
         <h1 id="introduction">Introduction</h1>
 <aside>
-    <strong>Base URL</strong>: <code>http://localhost:8000</code>
+    <strong>Base URL</strong>: <code>http://localhost</code>
 </aside>
 <p>This documentation aims to provide all the information you need to work with our API.</p>
 <aside>As you scroll, you'll see code examples for working with the API in different programming languages in the dark area to the right (or as part of the content on mobile).
@@ -119,7 +119,7 @@ You can switch the language used with the tabs at the top right (or from the nav
 
     
 
-                                <h2 id="endpoints-GETapi-descriptions">Display the descriptions.</h2>
+                                <h2 id="endpoints-GETapi-descriptions">Show the professional duties.</h2>
 
 <p>
 </p>
@@ -132,14 +132,14 @@ You can switch the language used with the tabs at the top right (or from the nav
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/descriptions?search=&amp;grouping=architecture_layers%2Cactivities%2Clevels&amp;language=1&amp;level[]=1&amp;activity[]=3&amp;architecture_layer[]=2" \
+    --get "http://localhost/api/descriptions?search=&amp;grouping=architecture_layers%2Cactivities%2Clevels&amp;language=1&amp;level[]=1&amp;activity[]=3&amp;architecture_layer[]=2" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/descriptions"
+    "http://localhost/api/descriptions"
 );
 
 const params = {
@@ -167,7 +167,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-descriptions">
             <blockquote>
-            <p>Example response (200):</p>
+            <p>Example response (422):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -176,33 +176,27 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 54
+x-ratelimit-remaining: 59
 access-control-allow-origin: *
  </code></pre></details>         <pre>
 
-<code class="language-json" style="max-height: 300px;">[
-    {
-        &quot;id&quot;: 2,
-        &quot;value&quot;: &quot;Organisatieprocessen&quot;,
-        &quot;items&quot;: [
-            {
-                &quot;id&quot;: 3,
-                &quot;value&quot;: &quot;Ontwerpen&quot;,
-                &quot;items&quot;: [
-                    {
-                        &quot;id&quot;: 1,
-                        &quot;value&quot;: &quot;1&quot;,
-                        &quot;items&quot;: [
-                            &quot;Ontwerpen van enkele organisatieprocessen, enkele gegevensstromen van gestructureerde data, de inrichting van een organisatieonderdeel en/of een deel van de informatievoorziening&quot;,
-                            &quot;Opstellen van een eenvoudig datamanagementplan&quot;,
-                            &quot;Opstellen van een eenvoudig implementatieplan&quot;
-                        ]
-                    }
-                ]
-            }
+<code class="language-json" style="max-height: 300px;">{
+    &quot;message&quot;: &quot;The selected language is invalid. (and 3 more errors)&quot;,
+    &quot;errors&quot;: {
+        &quot;language&quot;: [
+            &quot;The selected language is invalid.&quot;
+        ],
+        &quot;level.0&quot;: [
+            &quot;The selected level.0 is invalid.&quot;
+        ],
+        &quot;activity.0&quot;: [
+            &quot;The selected activity.0 is invalid.&quot;
+        ],
+        &quot;architecture_layer.0&quot;: [
+            &quot;The selected architecture_layer.0 is invalid.&quot;
         ]
     }
-]</code>
+}</code>
  </pre>
     </span>
 <span id="execution-results-GETapi-descriptions" hidden>
@@ -362,14 +356,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/languages" \
+    --get "http://localhost/api/languages" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/languages"
+    "http://localhost/api/languages"
 );
 
 const headers = {
@@ -395,17 +389,12 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 53
+x-ratelimit-remaining: 58
 access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;data&quot;: [
-        {
-            &quot;id&quot;: 1,
-            &quot;value&quot;: &quot;nl&quot;
-        }
-    ]
+    &quot;data&quot;: []
 }</code>
  </pre>
     </span>
@@ -493,14 +482,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/filters?language=1" \
+    --get "http://localhost/api/filters?language=1" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/filters"
+    "http://localhost/api/filters"
 );
 
 const params = {
@@ -523,7 +512,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-filters">
             <blockquote>
-            <p>Example response (200):</p>
+            <p>Example response (422):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -532,73 +521,15 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 52
+x-ratelimit-remaining: 57
 access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;data&quot;: {
-        &quot;levels&quot;: [
-            {
-                &quot;id&quot;: 1,
-                &quot;value&quot;: &quot;1&quot;
-            },
-            {
-                &quot;id&quot;: 2,
-                &quot;value&quot;: &quot;2&quot;
-            },
-            {
-                &quot;id&quot;: 3,
-                &quot;value&quot;: &quot;3&quot;
-            },
-            {
-                &quot;id&quot;: 4,
-                &quot;value&quot;: &quot;4&quot;
-            }
-        ],
-        &quot;activities&quot;: [
-            {
-                &quot;id&quot;: 1,
-                &quot;value&quot;: &quot;Analyseren&quot;
-            },
-            {
-                &quot;id&quot;: 2,
-                &quot;value&quot;: &quot;Adviseren&quot;
-            },
-            {
-                &quot;id&quot;: 3,
-                &quot;value&quot;: &quot;Ontwerpen&quot;
-            },
-            {
-                &quot;id&quot;: 4,
-                &quot;value&quot;: &quot;Realiseren&quot;
-            },
-            {
-                &quot;id&quot;: 5,
-                &quot;value&quot;: &quot;Manage &amp; Control&quot;
-            }
-        ],
-        &quot;architecture_layers&quot;: [
-            {
-                &quot;id&quot;: 1,
-                &quot;value&quot;: &quot;Gebruikersinteractie&quot;
-            },
-            {
-                &quot;id&quot;: 2,
-                &quot;value&quot;: &quot;Organisatieprocessen&quot;
-            },
-            {
-                &quot;id&quot;: 3,
-                &quot;value&quot;: &quot;Infrastructuur&quot;
-            },
-            {
-                &quot;id&quot;: 4,
-                &quot;value&quot;: &quot;Software&quot;
-            },
-            {
-                &quot;id&quot;: 5,
-                &quot;value&quot;: &quot;Hardware-Interfacing&quot;
-            }
+    &quot;message&quot;: &quot;The selected language is invalid.&quot;,
+    &quot;errors&quot;: {
+        &quot;language&quot;: [
+            &quot;The selected language is invalid.&quot;
         ]
     }
 }</code>
@@ -700,18 +631,19 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/professional-skills?language=1" \
+    --get "http://localhost/api/professional-skills?language=1&amp;search=sustain" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/professional-skills"
+    "http://localhost/api/professional-skills"
 );
 
 const params = {
     "language": "1",
+    "search": "sustain",
 };
 Object.keys(params)
     .forEach(key =&gt; url.searchParams.append(key, params[key]));
@@ -730,7 +662,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-professional-skills">
             <blockquote>
-            <p>Example response (200):</p>
+            <p>Example response (422):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -739,133 +671,17 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 51
+x-ratelimit-remaining: 56
 access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;data&quot;: [
-        {
-            &quot;id&quot;: 1,
-            &quot;value&quot;: &quot;Toekomstgericht organiseren&nbsp;&quot;,
-            &quot;competencies&quot;: [
-                {
-                    &quot;id&quot;: 1,
-                    &quot;value&quot;: &quot;Organisatorische context&nbsp;&quot;,
-                    &quot;description&quot;: {
-                        &quot;id&quot;: 1,
-                        &quot;value&quot;: &quot;Je brengt verschillende omgevingsfactoren (bijvoorbeeld maatschappelijke ontwikkelingen zoals vraagstukken op het gebied van duurzaamheid en/of inclusie) die de uitwerking van de opdracht kunnen be&iuml;nvloeden in beeld en onderneemt op basis hiervan vervolgstappen&quot;
-                    }
-                },
-                {
-                    &quot;id&quot;: 2,
-                    &quot;value&quot;: &quot;Ethiek&nbsp;&quot;,
-                    &quot;description&quot;: {
-                        &quot;id&quot;: 2,
-                        &quot;value&quot;: &quot;Je weegt maatschappelijke en ethische aspecten (zoals duurzaamheid en inclusie) in de (toegepaste) technologische en professionele context en betrekt deze in het professioneel handelen&quot;
-                    }
-                },
-                {
-                    &quot;id&quot;: 3,
-                    &quot;value&quot;: &quot;Procesmanagement&quot;,
-                    &quot;description&quot;: {
-                        &quot;id&quot;: 3,
-                        &quot;value&quot;: &quot;Je organiseert en realiseert de opdracht (bijvoorbeeld een projectopdracht) op basis van gestelde randvoorwaarden en draagt zorg voor een duurzame inbedding van de oplevering in de organisatie&quot;
-                    }
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 2,
-            &quot;value&quot;: &quot;Onderzoekend vermogen&nbsp;&quot;,
-            &quot;competencies&quot;: [
-                {
-                    &quot;id&quot;: 4,
-                    &quot;value&quot;: &quot;Methodische Probleemaanpak&nbsp;&quot;,
-                    &quot;description&quot;: {
-                        &quot;id&quot;: 4,
-                        &quot;value&quot;: &quot;Je brengt relevante vraagstukken en/of mogelijkheden in beeld, identificeert welke kennis ontbreekt en plant vervolgstappen in het onderzoek op gestructureerde en kritische wijze, waarbij je kiest voor methoden die passen bij het voorliggende vraagstuk&quot;
-                    }
-                },
-                {
-                    &quot;id&quot;: 5,
-                    &quot;value&quot;: &quot;Onderzoek&nbsp;&quot;,
-                    &quot;description&quot;: {
-                        &quot;id&quot;: 5,
-                        &quot;value&quot;: &quot;Je voert onderzoek doorlopend met een open houding op onderbouwde,&nbsp; pragmatische, gestructureerde en kritische wijze uit&quot;
-                    }
-                },
-                {
-                    &quot;id&quot;: 6,
-                    &quot;value&quot;: &quot;Oplossing&quot;,
-                    &quot;description&quot;: {
-                        &quot;id&quot;: 6,
-                        &quot;value&quot;: &quot;Je past de uit onderzoek verkregen informatie toe binnen de context van het vraagstuk en doet voorstellen op basis van de verkregen informatie. Je blijft hierbij kritisch en open voor alternatieve idee&euml;n en werkwijzen&quot;
-                    }
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 3,
-            &quot;value&quot;: &quot;Persoonlijk leiderschap&nbsp;&quot;,
-            &quot;competencies&quot;: [
-                {
-                    &quot;id&quot;: 7,
-                    &quot;value&quot;: &quot;Ondernemend zijn&nbsp;&quot;,
-                    &quot;description&quot;: {
-                        &quot;id&quot;: 7,
-                        &quot;value&quot;: &quot;Je werkt doelgericht en acteert weloverwogen op nieuwe kansen/initiatieven, waarin je samenwerkingspartners betrekt (denk aan teamleden, opdrachtgevers, eindgebruikers, maatschappelijke organisaties en/of andere stakeholders)&quot;
-                    }
-                },
-                {
-                    &quot;id&quot;: 8,
-                    &quot;value&quot;: &quot;Persoonlijke ontwikkeling&nbsp;&quot;,
-                    &quot;description&quot;: {
-                        &quot;id&quot;: 8,
-                        &quot;value&quot;: &quot;Je onderbouwt studie- en loopbaankeuzes en stuurt je eigen leerontwikkeling beargumenteerd bij (bijvoorbeeld middels reflectie en/of feedback)&quot;
-                    }
-                },
-                {
-                    &quot;id&quot;: 9,
-                    &quot;value&quot;: &quot;Persoonlijke profilering&nbsp;&quot;,
-                    &quot;description&quot;: {
-                        &quot;id&quot;: 9,
-                        &quot;value&quot;: &quot;Je evalueert regelmatig persoonlijke ambities en kwaliteiten in relatie tot de gewenste positionering in het werkveld en onderneemt hier op passende wijze actie op&quot;
-                    }
-                }
-            ]
-        },
-        {
-            &quot;id&quot;: 4,
-            &quot;value&quot;: &quot;Doelgericht interacteren&nbsp;&quot;,
-            &quot;competencies&quot;: [
-                {
-                    &quot;id&quot;: 10,
-                    &quot;value&quot;: &quot;Partners&nbsp;&quot;,
-                    &quot;description&quot;: {
-                        &quot;id&quot;: 10,
-                        &quot;value&quot;: &quot;Je onderhoudt actief de relatie met relevante samenwerkingspartners (denk aan teamleden, opdrachtgevers, eindgebruikers, maatschappelijke organisaties en/of andere stakeholders)&quot;
-                    }
-                },
-                {
-                    &quot;id&quot;: 11,
-                    &quot;value&quot;: &quot;Communicatie&quot;,
-                    &quot;description&quot;: {
-                        &quot;id&quot;: 11,
-                        &quot;value&quot;: &quot;Je stemt je communicatie weloverwogen en doelgericht af op de doelgroep(en)&quot;
-                    }
-                },
-                {
-                    &quot;id&quot;: 12,
-                    &quot;value&quot;: &quot;Samenwerking&quot;,
-                    &quot;description&quot;: {
-                        &quot;id&quot;: 12,
-                        &quot;value&quot;: &quot;Je werkt bewust, op constructieve wijze en in de geschikte vorm samen, waarbij je verantwoordelijkheid neemt voor jouw deel in de samenwerking (bijvoorbeeld in interdisciplinaire en/of interculturele context) en het eindresultaat&quot;
-                    }
-                }
-            ]
-        }
-    ]
+    &quot;message&quot;: &quot;The selected language is invalid.&quot;,
+    &quot;errors&quot;: {
+        &quot;language&quot;: [
+            &quot;The selected language is invalid.&quot;
+        ]
+    }
 }</code>
  </pre>
     </span>
@@ -950,9 +766,20 @@ You can check the Dev Tools console for debugging information.</code></pre>
     <br>
 <p>The id of the language to use. Example: <code>1</code></p>
             </div>
+                                    <div style="padding-left: 28px; clear: unset;">
+                <b style="line-height: 2;"><code>search</code></b>&nbsp;&nbsp;
+<small>string</small>&nbsp;
+<i>optional</i> &nbsp;
+                <input type="text" style="display: none"
+                              name="search"                data-endpoint="GETapi-professional-skills"
+               value="sustain"
+               data-component="query">
+    <br>
+<p>The search query. Example: <code>sustain</code></p>
+            </div>
                 </form>
 
-                    <h2 id="endpoints-GETapi-export">Retrieve the JSON for the professional duties and professional skills.</h2>
+                    <h2 id="endpoints-GETapi-export">Show Retrieve the JSON for the professional duties and professional skills.</h2>
 
 <p>
 </p>
@@ -965,14 +792,14 @@ You can check the Dev Tools console for debugging information.</code></pre>
 
 <div class="bash-example">
     <pre><code class="language-bash">curl --request GET \
-    --get "http://localhost:8000/api/export?search=&amp;grouping=architecture_layers%2Cactivities%2Clevels&amp;language=1&amp;level[]=1&amp;activity[]=3&amp;architecture_layer[]=2" \
+    --get "http://localhost/api/export?search=&amp;grouping=architecture_layers%2Cactivities%2Clevels&amp;language=1&amp;level[]=1&amp;activity[]=3&amp;architecture_layer[]=2" \
     --header "Content-Type: application/json" \
     --header "Accept: application/json"</code></pre></div>
 
 
 <div class="javascript-example">
     <pre><code class="language-javascript">const url = new URL(
-    "http://localhost:8000/api/export"
+    "http://localhost/api/export"
 );
 
 const params = {
@@ -1000,7 +827,7 @@ fetch(url, {
 
 <span id="example-responses-GETapi-export">
             <blockquote>
-            <p>Example response (200):</p>
+            <p>Example response (422):</p>
         </blockquote>
                 <details class="annotation">
             <summary style="cursor: pointer;">
@@ -1009,156 +836,24 @@ fetch(url, {
             <pre><code class="language-http">cache-control: no-cache, private
 content-type: application/json
 x-ratelimit-limit: 60
-x-ratelimit-remaining: 50
+x-ratelimit-remaining: 55
 access-control-allow-origin: *
  </code></pre></details>         <pre>
 
 <code class="language-json" style="max-height: 300px;">{
-    &quot;data&quot;: {
-        &quot;professional_skills&quot;: [
-            {
-                &quot;id&quot;: 1,
-                &quot;value&quot;: &quot;Toekomstgericht organiseren&nbsp;&quot;,
-                &quot;competencies&quot;: [
-                    {
-                        &quot;id&quot;: 1,
-                        &quot;value&quot;: &quot;Organisatorische context&nbsp;&quot;,
-                        &quot;description&quot;: {
-                            &quot;id&quot;: 1,
-                            &quot;value&quot;: &quot;Je brengt verschillende omgevingsfactoren (bijvoorbeeld maatschappelijke ontwikkelingen zoals vraagstukken op het gebied van duurzaamheid en/of inclusie) die de uitwerking van de opdracht kunnen be&iuml;nvloeden in beeld en onderneemt op basis hiervan vervolgstappen&quot;
-                        }
-                    },
-                    {
-                        &quot;id&quot;: 2,
-                        &quot;value&quot;: &quot;Ethiek&nbsp;&quot;,
-                        &quot;description&quot;: {
-                            &quot;id&quot;: 2,
-                            &quot;value&quot;: &quot;Je weegt maatschappelijke en ethische aspecten (zoals duurzaamheid en inclusie) in de (toegepaste) technologische en professionele context en betrekt deze in het professioneel handelen&quot;
-                        }
-                    },
-                    {
-                        &quot;id&quot;: 3,
-                        &quot;value&quot;: &quot;Procesmanagement&quot;,
-                        &quot;description&quot;: {
-                            &quot;id&quot;: 3,
-                            &quot;value&quot;: &quot;Je organiseert en realiseert de opdracht (bijvoorbeeld een projectopdracht) op basis van gestelde randvoorwaarden en draagt zorg voor een duurzame inbedding van de oplevering in de organisatie&quot;
-                        }
-                    }
-                ]
-            },
-            {
-                &quot;id&quot;: 2,
-                &quot;value&quot;: &quot;Onderzoekend vermogen&nbsp;&quot;,
-                &quot;competencies&quot;: [
-                    {
-                        &quot;id&quot;: 4,
-                        &quot;value&quot;: &quot;Methodische Probleemaanpak&nbsp;&quot;,
-                        &quot;description&quot;: {
-                            &quot;id&quot;: 4,
-                            &quot;value&quot;: &quot;Je brengt relevante vraagstukken en/of mogelijkheden in beeld, identificeert welke kennis ontbreekt en plant vervolgstappen in het onderzoek op gestructureerde en kritische wijze, waarbij je kiest voor methoden die passen bij het voorliggende vraagstuk&quot;
-                        }
-                    },
-                    {
-                        &quot;id&quot;: 5,
-                        &quot;value&quot;: &quot;Onderzoek&nbsp;&quot;,
-                        &quot;description&quot;: {
-                            &quot;id&quot;: 5,
-                            &quot;value&quot;: &quot;Je voert onderzoek doorlopend met een open houding op onderbouwde,&nbsp; pragmatische, gestructureerde en kritische wijze uit&quot;
-                        }
-                    },
-                    {
-                        &quot;id&quot;: 6,
-                        &quot;value&quot;: &quot;Oplossing&quot;,
-                        &quot;description&quot;: {
-                            &quot;id&quot;: 6,
-                            &quot;value&quot;: &quot;Je past de uit onderzoek verkregen informatie toe binnen de context van het vraagstuk en doet voorstellen op basis van de verkregen informatie. Je blijft hierbij kritisch en open voor alternatieve idee&euml;n en werkwijzen&quot;
-                        }
-                    }
-                ]
-            },
-            {
-                &quot;id&quot;: 3,
-                &quot;value&quot;: &quot;Persoonlijk leiderschap&nbsp;&quot;,
-                &quot;competencies&quot;: [
-                    {
-                        &quot;id&quot;: 7,
-                        &quot;value&quot;: &quot;Ondernemend zijn&nbsp;&quot;,
-                        &quot;description&quot;: {
-                            &quot;id&quot;: 7,
-                            &quot;value&quot;: &quot;Je werkt doelgericht en acteert weloverwogen op nieuwe kansen/initiatieven, waarin je samenwerkingspartners betrekt (denk aan teamleden, opdrachtgevers, eindgebruikers, maatschappelijke organisaties en/of andere stakeholders)&quot;
-                        }
-                    },
-                    {
-                        &quot;id&quot;: 8,
-                        &quot;value&quot;: &quot;Persoonlijke ontwikkeling&nbsp;&quot;,
-                        &quot;description&quot;: {
-                            &quot;id&quot;: 8,
-                            &quot;value&quot;: &quot;Je onderbouwt studie- en loopbaankeuzes en stuurt je eigen leerontwikkeling beargumenteerd bij (bijvoorbeeld middels reflectie en/of feedback)&quot;
-                        }
-                    },
-                    {
-                        &quot;id&quot;: 9,
-                        &quot;value&quot;: &quot;Persoonlijke profilering&nbsp;&quot;,
-                        &quot;description&quot;: {
-                            &quot;id&quot;: 9,
-                            &quot;value&quot;: &quot;Je evalueert regelmatig persoonlijke ambities en kwaliteiten in relatie tot de gewenste positionering in het werkveld en onderneemt hier op passende wijze actie op&quot;
-                        }
-                    }
-                ]
-            },
-            {
-                &quot;id&quot;: 4,
-                &quot;value&quot;: &quot;Doelgericht interacteren&nbsp;&quot;,
-                &quot;competencies&quot;: [
-                    {
-                        &quot;id&quot;: 10,
-                        &quot;value&quot;: &quot;Partners&nbsp;&quot;,
-                        &quot;description&quot;: {
-                            &quot;id&quot;: 10,
-                            &quot;value&quot;: &quot;Je onderhoudt actief de relatie met relevante samenwerkingspartners (denk aan teamleden, opdrachtgevers, eindgebruikers, maatschappelijke organisaties en/of andere stakeholders)&quot;
-                        }
-                    },
-                    {
-                        &quot;id&quot;: 11,
-                        &quot;value&quot;: &quot;Communicatie&quot;,
-                        &quot;description&quot;: {
-                            &quot;id&quot;: 11,
-                            &quot;value&quot;: &quot;Je stemt je communicatie weloverwogen en doelgericht af op de doelgroep(en)&quot;
-                        }
-                    },
-                    {
-                        &quot;id&quot;: 12,
-                        &quot;value&quot;: &quot;Samenwerking&quot;,
-                        &quot;description&quot;: {
-                            &quot;id&quot;: 12,
-                            &quot;value&quot;: &quot;Je werkt bewust, op constructieve wijze en in de geschikte vorm samen, waarbij je verantwoordelijkheid neemt voor jouw deel in de samenwerking (bijvoorbeeld in interdisciplinaire en/of interculturele context) en het eindresultaat&quot;
-                        }
-                    }
-                ]
-            }
+    &quot;message&quot;: &quot;The selected language is invalid. (and 3 more errors)&quot;,
+    &quot;errors&quot;: {
+        &quot;language&quot;: [
+            &quot;The selected language is invalid.&quot;
         ],
-        &quot;professional_duties&quot;: [
-            {
-                &quot;id&quot;: 2,
-                &quot;value&quot;: &quot;Organisatieprocessen&quot;,
-                &quot;items&quot;: [
-                    {
-                        &quot;id&quot;: 3,
-                        &quot;value&quot;: &quot;Ontwerpen&quot;,
-                        &quot;items&quot;: [
-                            {
-                                &quot;id&quot;: 1,
-                                &quot;value&quot;: &quot;1&quot;,
-                                &quot;items&quot;: [
-                                    &quot;Ontwerpen van enkele organisatieprocessen, enkele gegevensstromen van gestructureerde data, de inrichting van een organisatieonderdeel en/of een deel van de informatievoorziening&quot;,
-                                    &quot;Opstellen van een eenvoudig datamanagementplan&quot;,
-                                    &quot;Opstellen van een eenvoudig implementatieplan&quot;
-                                ]
-                            }
-                        ]
-                    }
-                ]
-            }
+        &quot;level.0&quot;: [
+            &quot;The selected level.0 is invalid.&quot;
+        ],
+        &quot;activity.0&quot;: [
+            &quot;The selected activity.0 is invalid.&quot;
+        ],
+        &quot;architecture_layer.0&quot;: [
+            &quot;The selected architecture_layer.0 is invalid.&quot;
         ]
     }
 }</code>

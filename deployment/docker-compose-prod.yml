@@ -34,6 +34,7 @@ services:
       - internal
     volumes:
       - storage_link:/var/www/html/storage/app/public
+      - scribe_link:/var/www/html/public/vendor
 
   web:
     build:
@@ -54,6 +55,7 @@ services:
       - "traefik.docker.network=traefik"
     volumes:
       - storage_link:/var/www/html/public/storage
+      - scribe_link:/var/www/html/public/vendor
 
 networks:
   internal:
@@ -63,5 +65,7 @@ networks:
 
 volumes:
   storage_link:
+    driver: local
+  scribe_link:
     driver: local
 
