@@ -40,7 +40,7 @@ class DescriptionSeeder extends Seeder
             return $v !== 'profskills';
         });
 
-        // These are used to limit the amount of database calls. Sheetnames are lowercase, and 
+        // These are used to limit the amount of database calls. Sheetnames are lowercase, and
         // thus the values of the architecture layers and activities temporarily need to be
         // lowercase aswell.
         $architectureLayers = ArchitectureLayerTranslation::where('language_id', '=', $language->id)->get();
@@ -58,8 +58,8 @@ class DescriptionSeeder extends Seeder
         foreach($sheetNames as $sheetName){
             $workSheet = $spreadsheet->getSheetByName($sheetName);
             $architectureLayerCell = $workSheet->getCell('A1');
-            $architectureLayer = gettype($architectureLayerCell->getValue()) == 'string' 
-                            ? $architectureLayerCell->getValue() 
+            $architectureLayer = gettype($architectureLayerCell->getValue()) == 'string'
+                            ? $architectureLayerCell->getValue()
                             : $architectureLayerCell->getValue()->getPlainText();
 
             // These are used for making sure that the correct activity is set when creating the description.
@@ -77,7 +77,7 @@ class DescriptionSeeder extends Seeder
                 $currentCellName = $activitiesColumn.$currentRowIndex;
                 $currentCell = $workSheet->getCell($currentCellName);
 
-                // Activities have a fill of #E7E6E6, and 'divider' cells have a fill of #C00000, 
+                // Activities have a fill of #E7E6E6, and 'divider' cells have a fill of #C00000,
                 // meaning that a cell with a fill of #FFFFFF marks the end of the table.
                 if ($currentCell->getStyle()->getFill()->getStartColor()->getRGB() == 'FFFFFF'){
                     $endRow = $currentRowIndex;
@@ -91,11 +91,11 @@ class DescriptionSeeder extends Seeder
                     // Activities can include multiple descriptions, which means that an activity spans multiple rows.
                     if ($currentCell->getValue() != null){
                         // Set previousActivity since the activity is only defined once.
-                        $previousActivity = gettype($currentCell->getValue()) == 'string' 
-                            ? $currentCell->getValue() 
+                        $previousActivity = gettype($currentCell->getValue()) == 'string'
+                            ? $currentCell->getValue()
                             : $currentCell->getValue()->getPlainText(); // Some cells contain Rich Text instead of plain text
-                    } 
-                    
+                    }
+
                     // Current row is used as index instead of 'normal' indexing so that finding the related activity is easier.
                     $activityRows[$currentRowIndex] = $previousActivity;
                 }
@@ -122,20 +122,12 @@ class DescriptionSeeder extends Seeder
 
                     $architectureLayerId = $architectureLayers->where('value', $architectureLayer)->first()->architecture_layer_id;
                     $activityId = $activities->where('value', $activityRows[$i])->first()->activity_id;
-                    $levelId = $i + 1;
 
-                    $description = Description::where('architecture_layer_id', '=', $architectureLayerId)
-                                                ->where('activity_id', '=', $activityId)
-                                                ->where('level_id', '=', $levelId)
-                                                ->first();
-
-                    if (!$description){
-                        $description = Description::create([
-                            'architecture_layer_id' => $architectureLayerId,
-                            'level_id' => $levels->where('value', ''.$key + 1)->first()->id,
-                            'activity_id' => $activityId
-                        ]);
-                    }
+                    $description = Description::firstOrCreate([
+                        'architecture_layer_id' => $architectureLayerId,
+                        'level_id' => $levels->where('value', ''.$key + 1)->first()->id,
+                        'activity_id' => $activityId
+                    ]);
 
                     DescriptionTranslation::create([
                         'value' => $currentCell->getValue(),
